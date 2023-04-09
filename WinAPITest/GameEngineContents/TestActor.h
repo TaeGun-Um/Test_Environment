@@ -25,5 +25,22 @@ private:
 	class GameEngineRender* AnimationRender = nullptr;
 	class GameEngineCollision* BodyCollision = nullptr;
 
+	float Progress = 0.0f;
+	float RotationTime = 0.0f;
+	float Angle = 0.0f;
+	float AngleCount = 1.0f;
+
+	bool RotP = true;
+
+	float4 MovePos = float4::Zero;
+	float4 Direction = float4::Zero;
+	float4 NewPos = float4::Zero;
+
+	void WaggleDance(float _DeltaTime);
+	void WaggleDance2(float _DeltaTime);
+	void MoveAirplane(float _DeltaTime);
+	void Rotation(float _DeltaTime);
+	void GPTRotation();
+
 };
 
