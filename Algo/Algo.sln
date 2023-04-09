@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "8move", "8move\8move.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Wave", "Wave\Wave.vcxproj", "{24B6A362-B6FE-4D02-B697-08FE26306668}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CircularQ", "CircularQ\CircularQ.vcxproj", "{013A9118-2F54-448E-9B05-D5FC52F16909}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -121,6 +123,14 @@ Global
 		{24B6A362-B6FE-4D02-B697-08FE26306668}.Release|x64.Build.0 = Release|x64
 		{24B6A362-B6FE-4D02-B697-08FE26306668}.Release|x86.ActiveCfg = Release|Win32
 		{24B6A362-B6FE-4D02-B697-08FE26306668}.Release|x86.Build.0 = Release|Win32
+		{013A9118-2F54-448E-9B05-D5FC52F16909}.Debug|x64.ActiveCfg = Debug|x64
+		{013A9118-2F54-448E-9B05-D5FC52F16909}.Debug|x64.Build.0 = Debug|x64
+		{013A9118-2F54-448E-9B05-D5FC52F16909}.Debug|x86.ActiveCfg = Debug|Win32
+		{013A9118-2F54-448E-9B05-D5FC52F16909}.Debug|x86.Build.0 = Debug|Win32
+		{013A9118-2F54-448E-9B05-D5FC52F16909}.Release|x64.ActiveCfg = Release|x64
+		{013A9118-2F54-448E-9B05-D5FC52F16909}.Release|x64.Build.0 = Release|x64
+		{013A9118-2F54-448E-9B05-D5FC52F16909}.Release|x86.ActiveCfg = Release|Win32
+		{013A9118-2F54-448E-9B05-D5FC52F16909}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
