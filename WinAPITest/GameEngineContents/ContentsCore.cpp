@@ -14,8 +14,6 @@ ContentsCore::~ContentsCore()
 
 void ContentsCore::Start()
 {
-	int* a = new int;
-
 	CreateLevel<TestLevel>("TestLevel");
 
 	// ------------------------------- 레벨 선택 -------------------------------

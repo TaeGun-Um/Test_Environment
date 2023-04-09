@@ -6,6 +6,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
 {
+	int* a = new int;
+
 	ContentsCore::GetInst().CoreStart(hInstance);
 	return 1;
 }
