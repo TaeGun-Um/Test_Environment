@@ -433,7 +433,7 @@ void TS_DFS(Vertex* V, Node** List)
         E = E->Next;
     }
 
-    printtf("%c\n", V->Data);
+    printf("%c\n", V->Data);
     
     NewHead = SLL_CreateNode(V);
     SLL_InsertNewHead(List, &NewHead);
@@ -775,7 +775,7 @@ void Prim(Graph* G, Vertex* StartVertex, Graph* MST)
     while (CurrentVertex != nullptr)
     {
         Vertex* NewVertex = CreateVertex(CurrentVertex->Data);
-        AddVertex(&<ST, NewVertex);
+        AddVertex(&MST, NewVertex);
 
         Fringes[i] = nullptr;
         Precedences[i] = nullptr;
@@ -833,6 +833,192 @@ void Prim(Graph* G, Vertex* StartVertex, Graph* MST)
     free(Fringes);
     free(Precedences);
     free(MSTVertices);
+    free(Weights);
+
+    PQ_Destroy(PQ);
+}
+
+typedef struct tagDisjointSet
+{
+    struct tagDisjointSet* Parent;
+    void* Data
+} DisjointSet;
+
+DisjointSet* DS_FindSet(DisjointSet* Set)
+{
+    while (Set->Parent != nullptr)
+    {
+        Set = Set->Parent;
+    }
+
+    return Set;
+}
+
+void DS_UnionSet(DisjointSet* Set1, DisjointSet* Set2)
+{
+    Set2 = DS_FindSet(Set2);
+    Set2->Parent = Set1;
+}
+
+DisjointSet* DS_MakeSet(void* NewData)
+{
+    DisjointSet* NewNode = (DisjointSet*)malloc(sizeof(DisjointSet));
+    NewNode->Data = NewData;
+    NewNode->Parent = nullptr;
+
+    return NewNode;
+}
+
+void DS_DestroySet(DisjointSet* Set)
+{
+    free(Set);
+}
+
+void Kruskal(Graph* G, Graph* MST)
+{
+    int i = 0;
+    Vertex* CurrentVertex = nullptr;
+
+    Vertex** MSTVertices = (Vertex**)malloc(sizeof(Vertex*) * G->VertexCount);
+    DisjointSet** VertexSet = (DisjointSet**)malloc(sizeof(DisjointSet*) * G->VertexCount);
+
+    PriorityQueue* PQ = PQ_Create(10);
+    CurrentVertex = G->Vertices;
+
+    while (CurrentVertex != nullptr)
+    {
+        Edge* CurrentEdge;
+
+        VertexSet[i] = DS_MakeSet(CurrentVertex);
+        MSTVertices[i] = CreateVertex(CurrentVertex->Data);
+        AddVertex(&MST, MSTVertices[i]);
+
+        CurrentEdge = CurrentVertex->AdjacencyList;
+        
+        while (CurrentEdge != nullptr)
+        {
+            PQNode NewNode = { CurrentEdge->Weight, CurrentEdge };
+            PQ_Enqueue(PQ, NewNode);
+
+            CurrentEdge = CurrentEdge->Next;
+        }
+
+        CurrentVertex = CurrentVertex->Next;
+        i++;
+    }
+
+    while (!PQ_IsEmpty(PQ))
+    {
+        Edge* CurrentEdge;
+        int FromIndex;
+        int ToIndex;
+        PQNode Popped;
+
+        PQ_Dequeue(PQ, &Popped);
+        CurrentEdge = (Edge*)Popped.Data;
+
+        FromIndex = CurrentEdge->From->Index;
+        ToIndex = CurrentEdge->Target->Index;
+
+        CurrentVertex = (Vertex*)Popped.Data;
+
+        if (DS_FindSet(VertexSet[FromIndex]) != DS_FindSet(VertexSet[ToIndex]))
+        {
+            AddEdge(MSTVertices[FromIndex], CreateEdge(MSTVertices[FromIndex], MSTVertices[ToIndex], CurrentEdge->Weight));
+            AddEdge(MSTVertices[ToIndex], CreateEdge(MSTVertices[ToIndex], MSTVertices[FromIndex], CurrentEdge->Weight));
+            DS_UnionSet(VertexSet[FromIndex], VertexSet[ToIndex]);
+        }
+    }
+
+    for (i = 0; i < G->VertexCount; i++)
+    {
+        DS_DestroySet(VertexSet[i]);
+    }
+
+    free(VertexSet);
+    free(MSTVertices);
+}
+
+#define MAX_WEIGHT 36267
+
+void Dijkstra(Graph* G, Vertex* StartVertex, Graph* ShortestPath)
+{
+    int i = 0;
+
+    PQNode StartNode = { 0, StartVertex };
+    PriorityQueue* PQ = PQ_Create(10);
+
+    Vertex* CurrentVertex = nullptr;
+    Edge* CurrentEdge = nullptr;
+
+    int* Weights = (int*)malloc(sizeof(int) * G->VertexCount);
+    Vertex** ShortestPathVertices = (Vertex**)malloc(sizeof(Vertex*) * G->VertexCount);
+    Vertex** Fringes = (Vertex**)malloc(sizeof(Vertex*) * G->VertexCount);
+    Vertex** Precedences = (Vertex**)malloc(sizeof(Vertex*) * G->VertexCount);
+
+    CurrentVertex = G->Vertices;
+
+    while (CurrentVertex != nullptr)
+    {
+        Vertex* NewVertex = CreateVertex(CurrentVertex->Data);
+        AddVertex(ShortestPath, NewVertex);
+
+        Fringes[i] = nullptr;
+        Precedences[i] = nullptr;
+        ShortestPathVertices[i] = NewVertex;
+        Weights[i] = MAX_WEIGHT;
+        CurrentVertex = CurrentVertex->Next;
+        i++;
+    }
+
+    PQ_Enqueue(PQ, StartNode);
+
+    Weights[StartVertex->Index] = 0;
+
+    while (!PQ_IsEmpty(PQ))
+    {
+        PQNode Popped;
+        PQ_Dequeue(PQ, &Popped);
+        CurrentVertex = (Vertex*)Popped.Data;
+        Fringes[CurrentVertex->Index] = CurrentVertex;
+        CurrentEdge = CurrentVertex->AdjacencyList;
+
+        while (CurrentEdge != nullptr)
+        {
+            Vertex* TargetVertex = CurrentEdge->Target;
+
+            if (Fringes[TargetVertex->Index] == nullptr &&
+                (Weights[CurrentVertex->Index] + CurrentEdge->Weight) < Weights[TargetVertex->Index])
+            {
+                PQNode NewNode = { CurrentEdge->Weight, TargetVertex };
+                PQ_Enqueue(PQ, NewNode);
+
+                Precedences[TargetVertex->Index] = CurrentEdge->From;
+                Weights[TargetVertex->Index] = Weights[CurrentVertex->Index] + CurrentEdge->Weight;
+            }
+
+            CurrentEdge = CurrentEdge->Next;
+        }
+    }
+
+    for (i = 0; i < G->VertexCount; i++)
+    {
+        int FromIndex, ToIndex;
+
+        if (Precedences[i] == nullptr)
+        {
+            continue;
+        }
+
+        FromIndex = Precedences[i]->Index;
+        ToIndex = i;
+
+        AddEdge(ShortestPathVertices[FromIndex], CreateEdge(ShortestPathVertices[FromIndex], ShortestPathVertices[ToIndex], Weights[i]));
+    }
+
+    free(Fringes);
+    free(Precedences);
+    free(ShortestPathVertices);
     free(Weights);
 
     PQ_Destroy(PQ);
