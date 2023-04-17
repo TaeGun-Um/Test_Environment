@@ -8,33 +8,6 @@
     <ClInclude Include="GameEngineImage.h">
       <Filter>Resources\Image</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineSound.h">
-      <Filter>Resources\Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\FMOD\inc\fmod.h">
-      <Filter>ThirdParty\FMOD\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\FMOD\inc\fmod.hpp">
-      <Filter>ThirdParty\FMOD\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\FMOD\inc\fmod_codec.h">
-      <Filter>ThirdParty\FMOD\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\FMOD\inc\fmod_common.h">
-      <Filter>ThirdParty\FMOD\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\FMOD\inc\fmod_dsp.h">
-      <Filter>ThirdParty\FMOD\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\FMOD\inc\fmod_dsp_effects.h">
-      <Filter>ThirdParty\FMOD\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\FMOD\inc\fmod_errors.h">
-      <Filter>ThirdParty\FMOD\Header</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\FMOD\inc\fmod_output.h">
-      <Filter>ThirdParty\FMOD\Header</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineWindow.cpp" />
@@ -43,9 +16,6 @@
     </ClCompile>
     <ClCompile Include="GameEngineImage.cpp">
       <Filter>Resources\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="GameEngineSound.cpp">
-      <Filter>Resources\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,32 +43,5 @@
     <Filter Include="Resources\Image">
       <UniqueIdentifier>{2db9e546-026d-4ace-800b-c256a49c43af}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ThirdParty\FMOD\inc\fmod.cs">
-      <Filter>ThirdParty\FMOD\Header</Filter>
-    </None>
-    <None Include="ThirdParty\FMOD\inc\fmod_dsp.cs">
-      <Filter>ThirdParty\FMOD\Header</Filter>
-    </None>
-    <None Include="ThirdParty\FMOD\inc\fmod_errors.cs">
-      <Filter>ThirdParty\FMOD\Header</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="ThirdParty\FMOD\lib\x64\fmod_vc.lib">
-      <Filter>ThirdParty\FMOD\bin</Filter>
-    </Library>
-    <Library Include="ThirdParty\FMOD\lib\x64\fmodL_vc.lib">
-      <Filter>ThirdParty\FMOD\bin</Filter>
-    </Library>
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="ThirdParty\FMOD\lib\x64\fmod.dll">
-      <Filter>ThirdParty\FMOD\bin</Filter>
-    </CopyFileToFolders>
-    <CopyFileToFolders Include="ThirdParty\FMOD\lib\x64\fmodL.dll">
-      <Filter>ThirdParty\FMOD\bin</Filter>
-    </CopyFileToFolders>
   </ItemGroup>
 </Project>

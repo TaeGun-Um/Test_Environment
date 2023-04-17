@@ -25,7 +25,7 @@ protected:
 	void LevelChangeEnd(GameEngineLevel* _PrevLevel) override {}
 
 private:
-	GameEngineSoundPlayer BGMPlayer;
+	//GameEngineSoundPlayer BGMPlayer;
 
 	int SoundCount = 1;
 

@@ -19,7 +19,6 @@ void TestLevel::Loading()
 	Dir.MoveParentToDirectory("Resources");
 	Dir.Move("Resources");
 
-	GameEngineResources::GetInst().SoundLoad(Dir.GetPlusFileName("Title(recorder).mp3"));
 	GameEngineResources::GetInst().ImageLoad(Dir.GetPlusFileName("Sky.bmp"))->Cut(5, 9);
 
 	if (false == GameEngineInput::IsKey("UpMove"))
@@ -36,11 +35,11 @@ void TestLevel::Loading()
 
 void TestLevel::Update(float _DeltaTime)
 {
-	if (SoundCount == 1)
-	{
-		SoundCount = 0;
-		BGMPlayer = GameEngineResources::GetInst().SoundPlayToControl("Title(recorder).mp3");
-		BGMPlayer.Volume(0.3f);
-		BGMPlayer.LoopCount(100);
-	}
+	//if (SoundCount == 1)
+	//{
+	//	SoundCount = 0;
+	//	BGMPlayer = GameEngineResources::GetInst().SoundPlayToControl("Title(recorder).mp3");
+	//	BGMPlayer.Volume(0.3f);
+	//	BGMPlayer.LoopCount(100);
+	//}
 }
