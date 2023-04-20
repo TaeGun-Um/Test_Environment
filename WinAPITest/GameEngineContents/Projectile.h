@@ -47,6 +47,15 @@ private:
 	float a = 0.0f;
 	float q = 0.0f;
 
+	float Timer = 0.0f;
+	float Duration = 1.0f;
+	float XPos = 0.0f;
+
+	float4 StartPosX = float4::Zero;
+	float4 EndPosX = float4::Zero;
+
+	float MoveSpeed = 300.0f;
+
 	void Quadraticfunction(float _DeltaTime);
 	void ProjectileCal(float _DeltaTime);
 };

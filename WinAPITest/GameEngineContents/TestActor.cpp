@@ -94,7 +94,7 @@ void TestActor::CreateBoom()
 	float4 PlayerPos = Player::MainPlayer->GetPos();
 	float4 TestPos = AnimationRender->GetPosition() + float4{0.0f, -100.0f};
 
-	float XL = float4::Lerp(TestPos, PlayerPos, 0.35f).x;
+	float XL = float4::Lerp(TestPos, PlayerPos, 0.325f).x;
 	float YL = Size_half.y;
 	float4 LinePos = float4{ XL, YL };
 

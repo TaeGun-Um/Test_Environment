@@ -4,6 +4,7 @@
 #include <cmath>
 #include "ContentsEnum.h"
 
+
 Projectile::Projectile() 
 {
 }
@@ -33,11 +34,13 @@ void Projectile::Update(float _DeltaTime)
 
 void Projectile::ProjectileCal(float _DeltaTime)
 {
-	SetMove(float4::Left * 500.0f * _DeltaTime);
+	Timer += _DeltaTime * 0.5f;
 
-	float YPos = a * ((GetPos().x - VertexX) * (GetPos().x - VertexX)) + q;
+	float4 NowPos = float4::LerpClamp(StartPosX, EndPosX, Timer);
 
-	SetPos({GetPos().x, YPos });
+	float YPos = a * ((NowPos.x - VertexX) * (NowPos.x - VertexX)) + q;
+
+	SetPos({ NowPos.x, YPos});
 }
 
 void Projectile::Quadraticfunction(float _DeltaTime)
@@ -51,9 +54,12 @@ void Projectile::Quadraticfunction(float _DeltaTime)
 	float Shoot_x = ShootPos.x;   // 시작 x
 	float Shoot_y = ShootPos.y;   // 시작 y
 
-	float Target_y = TargetPos.y; // 종료 x
-	float Target_x = TargetPos.x; // 종료 y
+	float Target_y = TargetPos.y; // 종료 y
+	float Target_x = TargetPos.x; // 종료 x
 
 	a = (Shoot_y - q) / ((Shoot_x - VertexX) * (Shoot_x - VertexX));
 
+	XPos = GetPos().x;
+	StartPosX.x = Shoot_x;
+	EndPosX.x = Target_x;
 }
