@@ -1,11 +1,18 @@
 #include "TestActor.h"
 #include <iostream>
 
+#include <GameEngineBase/GameEngineMath.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEngineCore/GameEngineRender.h>
 #include <GameEngineBase/GameEngineMath.h>
+#include <GameEnginePlatform/GameEngineInput.h>
+#include <GameEngineBase/GameEngineRandom.h>
+#include <GameEngineCore/GameEngineLevel.h>
 #include <math.h>
 
+#include "Projectile.h"
+#include "Player.h"
+#include "LineX.h"
 #include "ContentsEnum.h"
 
 TestActor::TestActor() 
@@ -22,7 +29,7 @@ void TestActor::Start()
 	float4 Size_half = GameEngineWindow::GetScreenSize().half();
 
 	AnimationRender = CreateRender(RenderOrder::Player);
-	AnimationRender->SetPosition(Size_half);
+	AnimationRender->SetPosition(Size_half + float4{350.0f, -50.0f});
 	AnimationRender->SetScale({ 400, 400 });
 	AnimationRender->CreateAnimation({ .AnimationName = "Idle",  .ImageName = "Sky.bmp", .Start = 0, .End = 5, .InterTime = 0.1f });
 	AnimationRender->ChangeAnimation("Idle");
@@ -32,7 +39,8 @@ void TestActor::Start()
 	Direction.x = 10;
 	Direction.y = 10;
 
-	NewPos = GetPos();
+	// NewPos = GetPos();
+	NewPos = AnimationRender->GetPosition();
 }
 
 void TestActor::Update(float _DeltaTime)
@@ -40,12 +48,142 @@ void TestActor::Update(float _DeltaTime)
 	//WaggleDance(_DeltaTime);
 	//MoveAirplane(_DeltaTime);
 	//Rotation(_DeltaTime);
-	WaggleDance2(_DeltaTime);
+	//
+
+	//if (GameEngineInput::IsDown("Action"))
+	//{
+	//	IsWaveStart = true;
+	//}
+
+	//if (IsWaveStart == true)
+	//{
+	//	WaveMove(_DeltaTime);
+	//}
+	
+
+	//if (GameEngineInput::IsDown("Action"))
+	//{
+	//	IsStart = true;
+	//}
+
+	//if (Waggle == true && IsStart == true)
+	//{
+	//	WaggleDance2(_DeltaTime);
+	//}
+
+	//if (Waggle == false && IsStart == true)
+	//{
+	//	WaggleDance3(_DeltaTime);
+	//}
+	
+	if (true == GameEngineInput::IsDown("Action"))
+	{
+		CreateBoom();
+	}
+	
 }
 
-void TestActor::Render(float _DeltaTime)
+void TestActor::CreateBoom()
 {
+	Projectile* NewP = GetLevel()->CreateActor<Projectile>();
+	LineX* NewLine = GetLevel()->CreateActor<LineX>();
 
+	float4 Size = GameEngineWindow::GetScreenSize();
+	float4 Size_half = GameEngineWindow::GetScreenSize().half();
+
+	float4 PlayerPos = Player::MainPlayer->GetPos();
+	float4 TestPos = AnimationRender->GetPosition() + float4{0.0f, -100.0f};
+
+	float XL = float4::Lerp(TestPos, PlayerPos, 0.35f).x;
+	float YL = Size_half.y;
+	float4 LinePos = float4{ XL, YL };
+
+	NewP->SetPos(TestPos);
+	NewP->SetShootPos(TestPos);
+	NewP->SetTargetPos(PlayerPos);
+	NewP->SetVertexX(XL);
+
+	NewLine->SetPos(LinePos);
+}
+
+void TestActor::WaveMove(float _DeltaTime)
+{
+	Progress += _DeltaTime;
+
+	float Time = Progress * 3.0f;
+
+	float4 Pos = float4::Zero;
+
+	//Posision.x = sinf(Progress * 10.0f);
+
+	//float4 LeftMove = float4::Left * 100.0f * _DeltaTime;
+
+	//SetMove(LeftMove);
+
+	Pos.x -= Time * 50.0f;
+	Pos.y = -sinf(Time) * 100.0f;
+
+	SetPos(Pos);
+}
+
+void TestActor::WaggleDance2(float _DeltaTime)
+{
+	Progress += _DeltaTime;
+
+	float Time = Progress * 3.0f;
+
+	float4 Pos = float4::Zero;
+
+	Pos.x = sinf(Time * 1.0f + GameEngineMath::PIE) * 100.0f;
+	Pos.y = cosf(Time + GameEngineMath::PIE) * 100.0f;
+
+	if (GameEngineMath::PIE2 <= Time)
+	{
+		int RandC = GameEngineRandom::MainRandom.RandomInt(1, 3);
+
+		if (RandC == 1)
+		{
+			Waggle = true;
+		}
+		else
+		{
+			Waggle = false;
+		}
+
+		Progress = 0.0f;
+	}
+
+	SetPos(Pos + float4::Down * 100.0f);
+}
+
+void TestActor::WaggleDance3(float _DeltaTime)
+{
+	Progress += _DeltaTime;
+
+	float Time = -(Progress * 3.0f);
+
+	float4 Pos = float4::Zero;
+
+	Pos.x = sinf(Time * 1.0f) * 100.0f;
+	Pos.y = cosf(Time) * 100.0f - 200.0f;
+
+	if (-GameEngineMath::PIE2 >= Time)
+	{
+		int RandC = GameEngineRandom::MainRandom.RandomInt(1, 3);
+
+		if (RandC == 1)
+		{
+			Waggle = false;
+		}
+		else
+		{
+			Waggle = true;
+		}
+
+		Progress = 0.0f;
+	}
+
+	SetPos(Pos + float4::Down * 100.0f);
 }
 
 void TestActor::WaggleDance(float _DeltaTime)
@@ -111,17 +249,6 @@ void TestActor::Rotation(float _Deltatime)
 	}
 }
 
-void TestActor::WaggleDance2(float _DeltaTime)
-{
-	float Time = GetLiveTime();
-
-	float4 Pos = float4::Zero;
-
-	Pos.x = sinf(Time * 1.0f) * 100.0f;
-	Pos.y = cosf(Time) * 100.0f;
-
-	SetPos(Pos);
-}
 
 void TestActor::GPTRotation()
 {

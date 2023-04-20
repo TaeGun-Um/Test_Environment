@@ -5,10 +5,16 @@
     <ClInclude Include="TestLevel.h" />
     <ClInclude Include="TestActor.h" />
     <ClInclude Include="ContentsEnum.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="LineX.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp" />
     <ClCompile Include="TestLevel.cpp" />
     <ClCompile Include="TestActor.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="LineX.cpp" />
   </ItemGroup>
 </Project>
