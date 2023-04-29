@@ -24,6 +24,18 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ContentsEnum.h" />
+    <ClInclude Include="LineX.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TestActor.h">
       <SubType>
       </SubType>
@@ -35,6 +47,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ContentsCore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="LineX.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
       <SubType>
       </SubType>
     </ClCompile>

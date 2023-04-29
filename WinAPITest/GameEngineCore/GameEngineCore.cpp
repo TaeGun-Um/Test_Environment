@@ -3,7 +3,6 @@
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEnginePlatform/GameEngineWindow.h>
 #include <GameEnginePlatform/GameEngineInput.h>
-#include <GameEnginePlatform/GameEngineSound.h>
 #include "GameEngineCore.h"
 #include "GameEngineLevel.h"
 #include "GameEngineResources.h"
@@ -57,7 +56,7 @@ void GameEngineCore::GlobalStart()
 // WindowLoop->Update()
 void GameEngineCore::GlobalUpdate()
 {
-	GameEngineSound::SoundUpdate();                      // 사운드 확인 후 재생
+
 	float Time = GameEngineTime::GlobalTime.TimeCheck(); // 한 프레임(Loop 1회)의 Deltatime Check
 	GameEngineInput::Update(Time);                       // 이전 프레임의 키 상태 확인
 

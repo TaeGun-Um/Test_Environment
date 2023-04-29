@@ -6,25 +6,7 @@
 #include <GameEnginePlatform/GameEngineImage.h>
 #include <GameEnginePlatform/GameEngineSound.h>
 
-// Soundplay한 파일에 대해 옵션 조절 (볼륨, 루프, 정지)
-class GameEngineSoundPlayer
-{
-public:
-	GameEngineSoundPlayer() {}
-	GameEngineSoundPlayer(FMOD::Channel* _Channel); // ControlChannel 이니셜라이져
 
-	void LoopCount(int _Count); // 루프 횟수 조절
-	void Volume(float _Volume); // 볼륨 조절
-	void Stop();                // 재생 정지 (다시 틀면 처음부터 시작)
-	void PauseOn();             // 일시 정지
-	void PauseOff();            // 일시 정지 해제
-
-	bool GetPause();            // 일시 정지 상태 확인
-
-private:
-	FMOD::Channel* ControlChannel = nullptr;
-
-};
 
 class GameEnginePath;
 class GameEngineImage;
@@ -57,21 +39,7 @@ public:
 	// 이미지 동적할당 해제
 	void Release();
 
-	// GameEngineImage를 리소스가 매니지먼트하고 있기 떄문에, GameEngineSound도 동일한 형식으로 작성
-	// 경로와 파일명을 문자열로 변환 후 아래 함수 수행
-	GameEngineSound* SoundLoad(const GameEnginePath& _Path);
 
-	// 결정한 사운드에 대한 동적할당 실시 (GameEngineImage 콜)
-	GameEngineSound* SoundLoad(const std::string_view& _Path, const std::string_view& _Name);
-
-	// AllSound map에 저장한 사운드 파일 탐색
-	GameEngineSound* SoundFind(const std::string_view& _Name);
-
-	// Sound에 저장한 파일 탐색 후 재생 (루프 0)
-	void SoundPlay(const std::string_view& _Name);
-
-	// Sound에 저장한 파일 탐색 후 재생
-	GameEngineSoundPlayer SoundPlayToControl(const std::string_view& _Name);
 
 protected:
 
