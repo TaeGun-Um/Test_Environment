@@ -841,7 +841,7 @@ void Prim(Graph* G, Vertex* StartVertex, Graph* MST)
 typedef struct tagDisjointSet
 {
     struct tagDisjointSet* Parent;
-    void* Data
+    void* Data;
 } DisjointSet;
 
 DisjointSet* DS_FindSet(DisjointSet* Set)
